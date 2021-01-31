@@ -1,6 +1,8 @@
-# README
+# pong
 
-## Dependencies:
+Pong game written using SDL.
+
+## Dependencies
 
 C++ 17  
 SDL 2.0  
