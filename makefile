@@ -13,7 +13,7 @@ debug:
 release:
 	g++ pong.cpp -o pong -O3 $(FLAGS) $(LIBRARIES)
 
-run:
+run: build
 	./pong
 
 clean:
