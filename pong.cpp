@@ -1,47 +1,23 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include "objects.hpp"
+#include "utilities.hpp"
 
 using namespace std;
 
 constexpr int WINDOW_WIDTH = 640;
 constexpr int WINDOW_HEIGHT = 480;
-constexpr int BALL_WIDTH = 15;
-constexpr int BALL_HEIGHT = 15;
 
 void crash() {
     cout << SDL_GetError() << endl;
     exit(EXIT_FAILURE);
 }
 
-// Pair of floats that do memberwise addition and multiplication
-struct Vec2 {
-    Vec2(): x(0.0f), y(0.0f) {}
-    Vec2(float x, float y): x(x), y(y) {}
-    Vec2 operator+(Vec2 const& other) { return Vec2(x + other.x, y + other.y); }
-    Vec2 operator*(const float scale) { return Vec2(x * scale, y * scale); }
-    float x, y;
-};
-
-struct Ball {
-    Ball(Vec2 position) : position(position) {
-        rect.x = static_cast<int>(position.x);
-        rect.y = static_cast<int>(position.y);
-        rect.w = BALL_WIDTH;
-        rect.h = BALL_HEIGHT;
-    }
-    void Draw(SDL_Renderer* renderer) {
-        rect.x = static_cast<int>(position.x);
-        rect.y = static_cast<int>(position.y);
-        SDL_RenderFillRect(renderer, &rect);
-    }
-
-    Vec2 position;
-    SDL_Rect rect {};
-};
-
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
-    // Initialize the SDL library
+    // Initialize the SDL libraries
     if (SDL_Init(SDL_INIT_VIDEO) < 0) { crash(); }
+    if (TTF_Init() < 0) { crash(); }
      
     // SDL_Window - a struct that contains the window info. Basically, the physical pixels on the screen.
     SDL_Window* window = SDL_CreateWindow("Hello Shanshan", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
@@ -51,8 +27,15 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
     if (!renderer) { crash(); }
 
-    // Create the ball
-    Ball ball(Vec2(WINDOW_WIDTH / 2.0f - BALL_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f - BALL_HEIGHT / 2.0f));
+    // Initialize the font
+    TTF_Font* scoreFont = TTF_OpenFont("DejaVuSans.ttf", 40);
+
+    // Create the objects
+    Ball ball(Vec2(WINDOW_WIDTH / 2.0f - Ball::WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f - Ball::HEIGHT / 2.0f));
+    Paddle paddleOne(Vec2(50.0f, WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f));
+    Paddle paddleTwo(Vec2(WINDOW_WIDTH - 50.0f, WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f));
+    Score scoreOne(Vec2(WINDOW_WIDTH / 4.0f, 20.0f), renderer, scoreFont);
+    Score scoreTwo(Vec2(WINDOW_WIDTH * 0.75f, 20.0f), renderer, scoreFont);
 
     // Event loop
     bool quit = false;
@@ -72,7 +55,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
                 if (y % 5) SDL_RenderDrawPoint(renderer, WINDOW_WIDTH / 2, y);
             }
 
-            ball.Draw(renderer);
+            ball.draw(renderer);
+            paddleOne.draw(renderer);
+            paddleTwo.draw(renderer);
+            scoreOne.draw(renderer);
+            scoreTwo.draw(renderer);
 
             // Switch buffers
             SDL_RenderPresent(renderer);
@@ -82,6 +69,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
     // Clean up and exit
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_CloseFont(scoreFont);
+    TTF_Quit();
     SDL_Quit();
 
     return 0;
