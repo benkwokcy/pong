@@ -49,10 +49,10 @@ struct Paddle : public Object {
 
 struct Score : public Object {
     Score(Vec2 position, SDL_Renderer* renderer, TTF_Font* font) : Object(position), font(font) { 
-        surface = TTF_RenderText_Solid(font, "0", {0xFF, 0xFF, 0xFF, 0xFF}); // create a new surface with the text "0"
-        texture = SDL_CreateTextureFromSurface(renderer, surface); // a texture is a surface that is store in the GPU's VRAM
-        int width, height;
-        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height); // get the width/height of the texture
+        surface = TTF_RenderText_Solid(font, "0", {0xFF, 0xFF, 0xFF, 0xFF});
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        int width, height; 
+        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
         rect.w = width;
         rect.h = height;
     }
@@ -63,7 +63,7 @@ struct Score : public Object {
     }
 
     void draw(SDL_Renderer* renderer) {
-        SDL_RenderCopy(renderer, texture, nullptr, &rect); // Use our renderer to draw the rect portion of texture onto our main surface.
+        SDL_RenderCopy(renderer, texture, nullptr, &rect);
     }
 
     TTF_Font* font {};

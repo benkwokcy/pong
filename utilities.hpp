@@ -1,6 +1,6 @@
 #pragma once
 
-// Pair of floats that do memberwise addition and multiplication
+// A pair of floats that supports addition and multiplication
 struct Vec2 {
     Vec2(): x(0.0f), y(0.0f) {}
     Vec2(float x, float y): x(x), y(y) {}
