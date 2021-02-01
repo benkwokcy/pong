@@ -6,9 +6,6 @@
 
 using namespace std;
 
-constexpr int WINDOW_WIDTH = 640;
-constexpr int WINDOW_HEIGHT = 480;
-
 void crash() {
     cout << SDL_GetError() << endl;
     exit(EXIT_FAILURE);
@@ -20,7 +17,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
     if (TTF_Init() < 0) { crash(); }
      
     // Initialize Window
-    SDL_Window* window = SDL_CreateWindow("Hello Shanshan", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window) { crash(); }
     
     // Initialize Renderer
@@ -28,12 +25,18 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
     if (!renderer) { crash(); }
 
     // Initialize Font
-    TTF_Font* scoreFont = TTF_OpenFont("DejaVuSans.ttf", 40);
+    TTF_Font* scoreFont = TTF_OpenFont("assets/DejaVuSans.ttf", 40);
 
     // Create Objects
     Ball ball(Vec2(WINDOW_WIDTH / 2.0f - Ball::WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f - Ball::HEIGHT / 2.0f));
-    Paddle paddleOne(Vec2(50.0f, WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f));
-    Paddle paddleTwo(Vec2(WINDOW_WIDTH - 50.0f, WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f));
+    Paddle paddleOne(
+        Vec2(50.0f, WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f),
+        Vec2(0.0f, 0.0f)
+    );
+    Paddle paddleTwo(
+        Vec2(WINDOW_WIDTH - 50.0f, WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f),
+        Vec2(0.0f, 0.0f)
+    );
     Score scoreOne(Vec2(WINDOW_WIDTH / 4.0f, 20.0f), renderer, scoreFont);
     Score scoreTwo(Vec2(WINDOW_WIDTH * 0.75f, 20.0f), renderer, scoreFont);
 

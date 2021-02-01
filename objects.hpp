@@ -16,6 +16,14 @@ struct Object {
     SDL_Rect rect {};    
 };
 
+struct MovingObject : public Object {
+    MovingObject(Vec2 position, Vec2 velocity) : Object(position), velocity(velocity) {}
+
+    virtual void update(float dt) = 0;
+
+    Vec2 velocity;
+};
+
 struct Ball : public Object {
     Ball(Vec2 position) : Object(position) {
         rect.w = WIDTH;
@@ -32,10 +40,15 @@ struct Ball : public Object {
     constexpr static int HEIGHT = 15;
 };
 
-struct Paddle : public Object {
-    Paddle(Vec2 position) : Object(position) {
+struct Paddle : public MovingObject {
+    Paddle(Vec2 position, Vec2 velocity) : MovingObject(position, velocity) {
         rect.w = WIDTH;
         rect.h = HEIGHT;
+    }
+
+    void update(float dt) {
+        position = velocity * dt;
+        std::clamp(position.y, 0.0f, static_cast<float>(WINDOW_HEIGHT - HEIGHT));
     }
 
     void draw(SDL_Renderer* renderer) {
