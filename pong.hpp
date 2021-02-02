@@ -190,6 +190,28 @@ struct Score : public Object {
         SDL_DestroyTexture(texture);
     }
 
+    Score(const Score& other) = delete;
+    Score& operator=(const Score& other) = delete;
+
+    Score(Score&& other) :
+        Object(std::move(other.position)),
+        font(other.font)
+    {
+        rect = std::move(other.rect);
+        surface = other.surface; other.surface = nullptr;
+        texture = other.texture; other.texture = nullptr;
+        other.font = nullptr;
+    }
+
+    Score& operator=(Score&& other) {
+        position = std::move(other.position);
+        rect = std::move(other.rect);
+        font = other.font; other.font = nullptr;
+        surface = other.surface; other.surface = nullptr;
+        texture = other.texture; other.texture = nullptr;
+        return *this;
+    }
+
     void draw(SDL_Renderer* renderer) {
         SDL_RenderCopy(renderer, texture, nullptr, &rect);
     }
@@ -210,8 +232,8 @@ struct Objects {
     {
         paddles.emplace_back(Vec2(50.0f, Window::WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f));
         paddles.emplace_back(Vec2(Window::WINDOW_WIDTH - 50.0f, Window::WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f));
-        scores.emplace_back(Vec2(Window::WINDOW_WIDTH * 0.25f, 20.0f), window.renderer, window.scoreFont);
         scores.emplace_back(Vec2(Window::WINDOW_WIDTH * 0.75f, 20.0f), window.renderer, window.scoreFont);
+        scores.emplace_back(Vec2(Window::WINDOW_WIDTH * 0.25f, 20.0f), window.renderer, window.scoreFont);
     }
 
     void update(Input& input) {
