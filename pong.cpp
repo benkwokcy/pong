@@ -22,9 +22,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
         objects.draw(window);
 
         auto endTime = chrono::steady_clock::now();
-        auto timeElapsed = chrono::duration<float, milli>(startTime - endTime).count() + 16.0f;
-        if (timeElapsed > 0.0) { 
-            SDL_Delay(static_cast<unsigned int>(timeElapsed)); 
+        auto timeToWait = 16.0f + chrono::duration<float, milli>(startTime - endTime).count();
+        if (timeToWait > 0.0) { 
+            SDL_Delay(static_cast<unsigned int>(timeToWait)); 
         } 
     }
    

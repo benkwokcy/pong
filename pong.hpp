@@ -161,7 +161,6 @@ struct Paddle : public MovingObject {
         }
         position.y += velocity.y;
         position.y = std::clamp(position.y, 0.0f, static_cast<float>(Window::WINDOW_HEIGHT - HEIGHT));
-        assert(position.y >= 0 && position.y <= static_cast<float>(Window::WINDOW_HEIGHT - HEIGHT));
     }
 
     void draw(SDL_Renderer* renderer) {
