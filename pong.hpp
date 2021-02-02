@@ -43,16 +43,15 @@ struct Window {
     }
 };
 
-enum PaddleState {
-    UP,
-    DOWN,
-    NEUTRAL
+struct PaddleState {
+    bool up = false;
+    bool down = false;
 };
 
 // Keep track of the input state
 struct Input {
     bool quit = false;
-    PaddleState paddleStates[2] { NEUTRAL, NEUTRAL };
+    PaddleState paddleStates[2];
 
     void update(SDL_Event& event) {
         if (event.type == SDL_QUIT) { quit = true; } 
@@ -62,24 +61,24 @@ struct Input {
                 case SDLK_ESCAPE:
                     quit = true; break;
                 case SDLK_w:
-                    paddleStates[0] = UP; break;
+                    paddleStates[0].up = true; break;
                 case SDLK_s:
-                    paddleStates[0] = DOWN; break;
+                    paddleStates[0].down = true; break;
                 case SDLK_UP:
-                    paddleStates[1] = UP; break;
+                    paddleStates[1].up = true; break;
                 case SDLK_DOWN:
-                    paddleStates[1] = DOWN; break;
+                    paddleStates[1].down = true; break;
             }
         } else if (event.type == SDL_KEYUP) {
             switch (event.key.keysym.sym) {
                 case SDLK_w:
-                    paddleStates[0] = NEUTRAL; break;
+                    paddleStates[0].up = false; break;
                 case SDLK_s:
-                    paddleStates[0] = NEUTRAL; break;
+                    paddleStates[0].down = false; break;
                 case SDLK_UP:
-                    paddleStates[1] = NEUTRAL; break;
+                    paddleStates[1].up = false; break;
                 case SDLK_DOWN:
-                    paddleStates[1] = NEUTRAL; break;
+                    paddleStates[1].down = false; break;
             }
         }
     }
@@ -153,13 +152,12 @@ struct Paddle : public MovingObject {
     ~Paddle() = default;
 
     void update(PaddleState paddleState) {
-        switch (paddleState) {
-            case UP:
-                velocity.y = -1.0f; break;
-            case DOWN:
-                velocity.y = 1.0f; break;
-            case NEUTRAL:
-                velocity.y = 0.0f; break;
+        if (paddleState.up) {
+            velocity.y = -SPEED;
+        } else if (paddleState.down) {
+            velocity.y = SPEED;
+        } else {
+            velocity.y = 0.0f;
         }
         position.y += velocity.y;
         position.y = std::clamp(position.y, 0.0f, static_cast<float>(Window::WINDOW_HEIGHT - HEIGHT));
@@ -171,6 +169,7 @@ struct Paddle : public MovingObject {
         SDL_RenderFillRect(renderer, &rect);
     }
 
+    constexpr static float SPEED = 7.0f;
     constexpr static int WIDTH = 15;
     constexpr static int HEIGHT = 75;
 };
