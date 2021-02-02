@@ -11,7 +11,6 @@ san:
 
 debug:
 	g++ pong.cpp -o pong -g $(FLAGS) $(LIBRARIES)
-	./pong
 
 fast:
 	g++ pong.cpp -o pong -O3 $(FLAGS) $(LIBRARIES)

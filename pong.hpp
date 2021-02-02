@@ -11,6 +11,7 @@ using namespace std;
 struct Window {
     static constexpr int WINDOW_WIDTH = 640;
     static constexpr int WINDOW_HEIGHT = 480;
+    static constexpr char GAME_NAME[] = "SHANSHAN";
 
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -19,7 +20,7 @@ struct Window {
     Window() {
         verify(SDL_Init(SDL_INIT_VIDEO), -1);
         verify(TTF_Init(), -1);
-        verify(window = SDL_CreateWindow("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN), nullptr);        
+        verify(window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN), nullptr);        
         verify(renderer = SDL_CreateRenderer(window, -1, 0), nullptr);        
         verify(scoreFont = TTF_OpenFont("assets/DejaVuSans.ttf", 40), nullptr);
     }

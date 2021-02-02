@@ -1,4 +1,4 @@
-.vscode
 pong.dSYM
 pong
 .DS_Store
+.vscode/settings.json
