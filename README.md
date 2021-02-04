@@ -3,11 +3,6 @@
 Pong game written using SDL.  
 Based off the tutorial from https://austinmorlan.com/posts/pong_clone/.
 
-## To Do
-
-- Fixed Time Game Loop
-- Debug Missing Score
-
 ## Things I Learned From Writing This
 
 - SDL
