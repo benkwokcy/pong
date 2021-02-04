@@ -7,8 +7,9 @@
 
 using namespace std;
 
-// Provides the window and renderer.
-struct Window {
+// This takes care of creating and destroying the SDL window, renderer, and font.
+class Window {
+public:
     static constexpr int WINDOW_WIDTH = 640;
     static constexpr int WINDOW_HEIGHT = 480;
     static constexpr char GAME_NAME[] = "SHANSHAN";
@@ -32,28 +33,29 @@ struct Window {
         TTF_Quit();
         SDL_Quit();
     }
-
+private:
     // Crash if code is equal to error code
     template <typename A, typename B>
-    void verify(A code, B errorCode) const {
-        if (code == static_cast<A>(errorCode)) {
+    void verify(const A actualCode, const B errorCode) const {
+        if (actualCode == static_cast<A>(errorCode)) {
             cout << SDL_GetError() << endl;
             exit(EXIT_FAILURE);
         }
     }
 };
 
+// Used by the Input class
 struct PaddleState {
     bool up = false;
     bool down = false;
 };
 
-// Keep track of the input state
+// We maintain one of these objects and update it with input events every frame
 struct Input {
     bool quit = false;
     PaddleState paddleStates[2];
 
-    void update(SDL_Event& event) {
+    void update(const SDL_Event& event) {
         if (event.type == SDL_QUIT) { quit = true; } 
 
         if (event.type == SDL_KEYDOWN) {
@@ -84,16 +86,16 @@ struct Input {
     }
 };
 
-// A pair of floats that supports addition and multiplication
+// Allows convenient arithmetic operations on a pair of floats.
 struct Vec2 {
     Vec2(): x(0.0f), y(0.0f) {}
     Vec2(float x, float y): x(x), y(y) {}
 
-    Vec2 operator+(Vec2 const& other) const { 
+    Vec2 operator+(const Vec2& other) const { 
         return Vec2(x + other.x, y + other.y); 
     }
     
-    Vec2& operator+=(Vec2 const& other) { 
+    Vec2& operator+=(const Vec2& other) { 
         x += other.x;
         y += other.y;
         return *this; 
@@ -106,7 +108,7 @@ struct Vec2 {
     float x, y;
 };
 
-// The base class for all objects in the game
+// Abstract base class for all drawable objects.
 struct Object {
     Object(Vec2 position) : position(position) {
         rect.x = static_cast<int>(position.x);
@@ -119,6 +121,7 @@ struct Object {
     SDL_Rect rect {};    
 };
 
+// Abstract base class for moving objects.
 struct MovingObject : public Object {
     MovingObject(Vec2 position, Vec2 velocity) : Object(position), velocity(velocity) {}
     virtual ~MovingObject() = default;
@@ -151,7 +154,7 @@ struct Paddle : public MovingObject {
     }
     ~Paddle() = default;
 
-    void update(PaddleState paddleState) {
+    void update(const PaddleState& paddleState) {
         if (paddleState.up) {
             velocity.y = -SPEED;
         } else if (paddleState.down) {
@@ -219,13 +222,13 @@ struct Score : public Object {
     SDL_Texture* texture {};
 };
 
-// Keeps track of the states of all objects
+// Manages the creation and drawing of all objects in the game.
 struct Objects {
     Ball ball;
     vector<Paddle> paddles;
     vector<Score> scores;
 
-    Objects(Window& window) :
+    Objects(const Window& window) :
         ball(Vec2(Window::WINDOW_WIDTH / 2.0f - Ball::WIDTH / 2.0f, Window::WINDOW_HEIGHT / 2.0f - Ball::HEIGHT / 2.0f))
     {
         paddles.emplace_back(Vec2(50.0f, Window::WINDOW_HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f));
@@ -240,7 +243,7 @@ struct Objects {
         }
     }
 
-    void draw(Window& window) {
+    void draw(const Window& window) {
          // Set Screen to Black
         SDL_SetRenderDrawColor(window.renderer, 0x0, 0x0, 0x0, 0xFF);
         SDL_RenderClear(window.renderer);
