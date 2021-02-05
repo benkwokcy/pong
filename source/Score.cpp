@@ -21,9 +21,12 @@ Score::~Score() {
 
 Score::Score(Score&& other) :
     position(std::move(other.position)),
+    valueInt(other.valueInt),
+    valueString(std::move(other.valueString)),
     font(other.font)
 {
     rect = std::move(other.rect);
+    renderer = other.renderer; other.renderer = nullptr;
     surface = other.surface; other.surface = nullptr;
     texture = other.texture; other.texture = nullptr;
     other.font = nullptr;
@@ -32,9 +35,12 @@ Score::Score(Score&& other) :
 Score& Score::operator=(Score&& other) {
     position = std::move(other.position);
     rect = std::move(other.rect);
+    renderer = other.renderer; other.renderer = nullptr;
     font = other.font; other.font = nullptr;
     surface = other.surface; other.surface = nullptr;
     texture = other.texture; other.texture = nullptr;
+    valueString = std::move(other.valueString);
+    valueInt = other.valueInt;
     return *this;
 }
 

@@ -6,14 +6,14 @@
 #include "Utilities.hpp"
 
 struct Score {
-    SDL_Rect rect {};    
     Vec2 position;
     int valueInt;
     std::string valueString;
+    SDL_Rect rect {};    
     TTF_Font* font {};
+    SDL_Renderer* renderer {};
     SDL_Surface* surface {};
     SDL_Texture* texture {};
-    SDL_Renderer* renderer {};
 
     Score(Vec2 position, SDL_Renderer* renderer, TTF_Font* font);
     ~Score();

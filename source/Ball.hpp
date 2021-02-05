@@ -18,7 +18,7 @@ struct Ball {
     SDL_Rect rect {};  
 
     Ball(Vec2 position, Vec2 velocity);
-    void reset();
+    void reset(int sign);
     void update(World& world);
     void collide(World& world);
     void draw(SDL_Renderer* renderer) const;

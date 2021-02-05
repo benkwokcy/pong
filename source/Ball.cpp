@@ -9,9 +9,11 @@ Ball::Ball(Vec2 position, Vec2 velocity) : position(position), velocity(velocity
     rect.h = HEIGHT;
 }
 
-void Ball::reset() {
+void Ball::reset(int sign) {
     position = initialPosition;
     velocity = initialVelocity;
+    velocity.x *= static_cast<float>(sign);
+    SDL_Delay(100);
 }
 
 void Ball::draw(SDL_Renderer* renderer) const {
@@ -34,11 +36,11 @@ void Ball::collide(World& world) {
     // WALL COLLISION
     if (ballRight < 0.0f) {
         world.scores[0].increment();
-        reset();
+        reset(-1);
         return;
     } else if (ballLeft > Window::WIDTH) {
         world.scores[1].increment();
-        reset();
+        reset(1);
         return;
     } else if (ballTop < 0.0f) { 
         velocity.y *= -1;
@@ -62,6 +64,22 @@ void Ball::collide(World& world) {
         if (ballTop >= paddleBottom) continue;
         if (ballBottom <= paddleTop) continue;
 
+        const auto paddleLower = paddleTop + (2.0f / 3.0f * Paddle::HEIGHT);
+        const auto paddleUpper = paddleTop + (1.0f / 3.0f * Paddle::HEIGHT);
+
+        if (ballTop < paddleUpper) {
+            velocity.y = Ball::VERTICAL_SPEED; 
+        } else if (ballBottom < paddleLower) {
+            velocity.y = -Ball::VERTICAL_SPEED;
+        }
+
+        if (velocity.x > 0.0f) {
+            position.x -= ballRight - paddleLeft; 
+        } else {
+            position.x += paddleRight - ballLeft;
+        }
+
         velocity.x *= -1;
+        return;
     }
 }

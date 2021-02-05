@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/pong",
             "args": [],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
