@@ -1,8 +1,11 @@
 #include <iostream>
 #include <chrono>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include "pong.hpp"
+
+#include "Window.hpp"
+#include "World.hpp"
 
 using namespace std;
 
@@ -16,19 +19,12 @@ void wait(const chrono::time_point<chrono::steady_clock>& startTime) {
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
     const Window window;
-    Objects objects(window);
-    Input input;
+    World world(window);
 
-    while (!input.quit){      
-        const auto startTime = chrono::steady_clock::now(); 
-
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            input.update(event);
-        }
-        objects.update(input);
-        objects.draw(window);
-
+    while (!world.input.quit){      
+        const auto startTime = chrono::steady_clock::now();         
+        world.update();
+        world.draw(window);
         wait(startTime);
     }
    
