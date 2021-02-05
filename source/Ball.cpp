@@ -45,10 +45,12 @@ void Ball::collide(World& world) {
     } else if (ballTop < 0.0f) { 
         velocity.y *= -1;
         position.y = 0.0;
+        world.audio.playWallHit();
         return;
     } else if (ballBottom > Window::HEIGHT) {
         velocity.y *= -1;
         position.y = Window::HEIGHT - HEIGHT;
+        world.audio.playWallHit();
         return;
     }
 
@@ -80,6 +82,9 @@ void Ball::collide(World& world) {
         }
 
         velocity.x *= -1;
+
+        world.audio.playPaddleHit();
+        
         return;
     }
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Audio.hpp"
 #include "Ball.hpp"
 #include "Paddle.hpp"
 #include "Score.hpp"
@@ -11,6 +12,7 @@ using namespace std;
 
 // Manager class for all stateful objects
 struct World {
+    Audio audio;
     Input input;
     Ball ball;
     vector<Paddle> paddles;
