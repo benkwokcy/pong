@@ -25,7 +25,7 @@ struct Window {
         verify(renderer = SDL_CreateRenderer(window, -1, 0), nullptr);        
         verify(scoreFont = TTF_OpenFont("source/assets/DejaVuSans.ttf", 40), nullptr);
         verify(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048), -1);
-        Mix_Volume(-1, 64);
+        Mix_Volume(-1, 8);
     }
 
     ~Window() {
