@@ -14,7 +14,10 @@ void wait(const chrono::time_point<chrono::steady_clock>& startTime) {
     const auto endTime = chrono::steady_clock::now();
     const auto timeElapsed = chrono::duration<float, milli>(endTime - startTime).count();
     const auto timeToWait = 16.0f - timeElapsed;
-    if (timeToWait > 0.0) { SDL_Delay(static_cast<unsigned int>(timeToWait)); } 
+    
+    if (timeToWait > 0.0) { 
+        SDL_Delay(static_cast<unsigned int>(timeToWait)); 
+    } 
 }
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {

@@ -12,7 +12,6 @@ Paddle::Paddle(Vec2 position, Vec2 velocity) : position(position), velocity(velo
 }
 
 void Paddle::update(const PaddleState& paddleState) {
-    // read input
     if (paddleState.up) {
         velocity.y = -SPEED;
     } else if (paddleState.down) {
@@ -21,7 +20,6 @@ void Paddle::update(const PaddleState& paddleState) {
         velocity.y = 0.0f;
     }
 
-    // update position
     position.y += velocity.y;
     position.y = std::clamp(position.y, 0.0f, static_cast<float>(Window::HEIGHT - HEIGHT));
     rect.y = static_cast<int>(position.y);
