@@ -11,6 +11,7 @@ struct PaddleState {
 // We maintain one of these objects and update it based on the user keyboard input every frame
 struct Input {
     bool quit = false;
+    bool pause = false;
     PaddleState paddleStates[2];
 
     void update() {
@@ -26,6 +27,7 @@ struct Input {
                     case SDLK_s:        paddleStates[0].down = true; break;
                     case SDLK_UP:       paddleStates[1].up = true; break;
                     case SDLK_DOWN:     paddleStates[1].down = true; break;
+                    case SDLK_p:        pause = !pause; break;
                 }
             } else if (event.type == SDL_KEYUP) {
                 switch (event.key.keysym.sym) {

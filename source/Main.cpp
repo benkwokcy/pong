@@ -23,11 +23,15 @@ void wait(const chrono::time_point<chrono::steady_clock>& startTime) {
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
     const Window window;
     World world(window);
+    Input input {};
 
-    while (!world.input.quit){      
-        const auto startTime = chrono::steady_clock::now();         
-        world.update();
-        world.draw(window);
+    while (!input.quit){      
+        const auto startTime = chrono::steady_clock::now();
+        input.update();
+        if (!input.pause) {
+            world.update(input);
+            world.draw(window);
+        }         
         wait(startTime);
     }
    

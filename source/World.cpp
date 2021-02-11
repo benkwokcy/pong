@@ -26,8 +26,7 @@ World::World(const Window& window) :
     scores.emplace_back(Vec2(Window::WIDTH * 0.25f, 20.0f), window.renderer, window.scoreFont);
 }
 
-void World::update() {
-    input.update();
+void World::update(const Input& input) {
     ball.update(*this);
     for (size_t i = 0; i < paddles.size(); i++) { 
         paddles[i].update(input.paddleStates[i]); 

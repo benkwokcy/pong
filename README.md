@@ -4,6 +4,13 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 
 ![Gameplay Demo](demo.png)
 
+## To Do
+
+- Add sprites
+- Add instructions at the bottom
+- Add AI
+- Add event queue and make the other functions pure
+
 ## Things I Learned From Writing This
 
 - SDL (Window, Graphics, Audio, Font)

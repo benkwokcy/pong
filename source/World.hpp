@@ -5,7 +5,6 @@
 #include "Paddle.hpp"
 #include "Score.hpp"
 #include "Window.hpp"
-#include "Input.hpp"
 #include <vector>
 
 using namespace std;
@@ -13,12 +12,11 @@ using namespace std;
 // Manager class for all stateful objects
 struct World {
     Audio audio;
-    Input input;
     Ball ball;
     vector<Paddle> paddles;
     vector<Score> scores;
 
     World(const Window& window);
-    void update();
+    void update(const Input& input);
     void draw(const Window& window) const;
 };
