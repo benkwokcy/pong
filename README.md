@@ -4,18 +4,24 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 
 ![Gameplay Demo](demo.png)
 
-## To Do
+## Features Done
+
+- Basic functionality (rendering, input, collision-detection)
+- Fixed timestep game loop
+- Score counters
+- Sound effects
+- Pause button
+
+## Features To Do
 
 - Add sprites
 - Add instructions at the bottom
+- Add pause menu
+- Add start menu
 - Add AI
+- Use entity component system
 - Add event queue and make the other functions pure
-
-## Things I Learned From Writing This
-
-- SDL (Window, Graphics, Audio, Font)
-- Game Loop
-- Object-oriented design in C++ (inheritance, virtual methods, RAII, ...)
+- Get better sound effects
 
 ## Dependencies
 
