@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <SDL2/SDL.h>
 
 // Allows convenient arithmetic operations on a pair of floats.
 struct Vec2 {
@@ -16,12 +15,3 @@ struct Vec2 {
 
     float x, y;
 };
-
-// Crash if code is equal to error code
-template <typename A, typename B>
-void verify(const A actualCode, const B errorCode) {
-    if (actualCode == static_cast<A>(errorCode)) {
-        std::cout << SDL_GetError() << std::endl;
-        exit(EXIT_FAILURE);
-    }
-}

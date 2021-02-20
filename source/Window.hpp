@@ -6,8 +6,6 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#include "Utilities.hpp"
-
 using namespace std;
 
 // This takes care of creating and destroying the SDL window, renderer, and font.
@@ -36,5 +34,14 @@ struct Window {
         TTF_CloseFont(scoreFont);
         TTF_Quit();
         SDL_Quit();
+    }
+
+    // Crash if code is equal to error code
+    template <typename A, typename B>
+    void verify(const A actualCode, const B errorCode) {
+        if (actualCode == static_cast<A>(errorCode)) {
+            std::cout << SDL_GetError() << std::endl;
+            exit(EXIT_FAILURE);
+        }
     }
 };
