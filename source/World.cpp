@@ -13,8 +13,8 @@ World::World(const Window& window) :
     playerPaddle(Vec2(50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f)),
     aiPaddle(Vec2(Window::WIDTH - 50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f))
     {
-        scores.emplace_back(Vec2(Window::WIDTH * 0.75f, 20.0f), window.renderer, window.scoreFont);
-        scores.emplace_back(Vec2(Window::WIDTH * 0.25f, 20.0f), window.renderer, window.scoreFont);
+        scores.emplace_back(Vec2(Window::WIDTH * 0.75f, 20.0f), window.renderer, window.scoreFont, "0");
+        scores.emplace_back(Vec2(Window::WIDTH * 0.25f, 20.0f), window.renderer, window.scoreFont, "0");
     }
 
 void World::update(const Input& input) {

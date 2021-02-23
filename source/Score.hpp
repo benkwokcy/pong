@@ -5,91 +5,33 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "Score.hpp"
 #include "Utilities.hpp"
+#include "Text.hpp"
 
 using namespace std;
 
-class Score {
+class Score : public Text {
 public:
-    Score(Vec2 position, SDL_Renderer* renderer, TTF_Font* font) : position(position), valueInt(0), font(font), renderer(renderer) { 
-        regenerate();
-        int width, height; SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-        rect.x = static_cast<int>(position.x);
-        rect.y = static_cast<int>(position.y);
-        rect.w = width;
-        rect.h = height;
-    }
+    Score(Vec2 position, SDL_Renderer* renderer, TTF_Font* font, string content) : 
+        Text(position, renderer, font, content), valueInt(0) 
+    {}
 
-    ~Score() {
-        SDL_FreeSurface(surface);
-        SDL_DestroyTexture(texture);
-    }
-
-    Score(const Score& other) = delete;
-    Score& operator=(const Score& other) = delete;
-    
-    Score(Score&& other) :
-        position(std::move(other.position)),
-        valueInt(other.valueInt),
-        valueString(std::move(other.valueString)),
-        rect(std::move(other.rect)),
-        font(other.font),
-        renderer(other.renderer),
-        surface(other.surface),
-        texture(other.texture)
-    {
-        other.renderer = nullptr;
-        other.surface = nullptr;
-        other.texture = nullptr;
-        other.font = nullptr;
+    Score(Score&& other) : Text(move(other)) {
+        valueInt = other.valueInt;
     }
 
     Score& operator=(Score&& other) {
-        position = std::move(other.position);
-        rect = std::move(other.rect);
-        font = other.font; 
-        valueString = std::move(other.valueString);
+        Text::operator=(move(other));
         valueInt = other.valueInt;
-        renderer = other.renderer; 
-        surface = other.surface; 
-        texture = other.texture; 
-
-        other.renderer = nullptr;
-        other.font = nullptr;
-        other.surface = nullptr;
-        other.texture = nullptr;
-
         return *this;
-    }
-
-    void draw() const {
-        SDL_RenderCopy(renderer, texture, nullptr, &rect);
     }
 
     void increment() {
         valueInt++;
+        valueString = to_string(valueInt);
         regenerate();
     }
 
 private:
-    Vec2 position;
     int valueInt;
-    std::string valueString;
-    SDL_Rect rect {};    
-    TTF_Font* font {};
-    SDL_Renderer* renderer {};
-    SDL_Surface* surface {};
-    SDL_Texture* texture {};
-
-    void regenerate() {
-        SDL_FreeSurface(surface);
-        SDL_DestroyTexture(texture);
-        
-        valueString = to_string(valueInt);
-        surface = TTF_RenderText_Solid(font, valueString.data(), {0xFF, 0xFF, 0xFF, 0xFF});
-        texture = SDL_CreateTextureFromSurface(renderer, surface);
-    }
-
-
 };
