@@ -25,6 +25,7 @@ private:
     Vec2 position;
     Vec2 velocity;
     SDL_Rect rect {};  
+    
     const Vec2 initialPosition;
     const Vec2 initialVelocity;
 

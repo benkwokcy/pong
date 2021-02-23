@@ -6,6 +6,7 @@
 #include "Ball.hpp"
 #include "Paddle.hpp"
 #include "Score.hpp"
+#include "Text.hpp"
 
 using namespace std;
 
@@ -18,9 +19,10 @@ struct World {
     Paddle playerPaddle;
     Paddle aiPaddle;
     vector<Score> scores;
+    Text pauseText;
 
     World(const Window& window);
     
     void update(const Input& input);
-    void draw(const Window& window) const;
+    void draw(const Window& window, const Input& input) const;
 };

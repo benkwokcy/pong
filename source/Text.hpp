@@ -12,8 +12,10 @@ using namespace std;
 class Text {
 public:
     Text(Vec2 position, SDL_Renderer* renderer, TTF_Font* font, string content) : position(position), valueString(content), font(font), renderer(renderer) { 
-        regenerate();
+        generate();
         int width, height; SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+        position.x -= width / 2;
+        position.y -= height / 2;
         rect.x = static_cast<int>(position.x);
         rect.y = static_cast<int>(position.y);
         rect.w = width;
@@ -21,8 +23,7 @@ public:
     }
 
     virtual ~Text() {
-        SDL_FreeSurface(surface);
-        SDL_DestroyTexture(texture);
+        clear();
     }
 
     Text(const Text& other) = delete;
@@ -73,10 +74,18 @@ protected:
     SDL_Surface* surface {};
     SDL_Texture* texture {};
 
-    void regenerate() {
+    void clear() {
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
+    }
+
+    void generate() {
         surface = TTF_RenderText_Solid(font, valueString.data(), {0xFF, 0xFF, 0xFF, 0xFF});
         texture = SDL_CreateTextureFromSurface(renderer, surface);
+    }
+
+    void regenerate() {
+        clear();
+        generate();
     }
 };
