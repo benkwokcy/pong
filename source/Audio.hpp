@@ -10,11 +10,11 @@ public:
         paddleHit = Mix_LoadWAV("source/assets/paddleHit.wav");
     }
 
-    void playWallHit() {
+    void playWallHit() const {
         Mix_PlayChannel(-1, wallHit, 0);
     }
 
-    void playPaddleHit() {
+    void playPaddleHit() const {
         Mix_PlayChannel(-1, paddleHit, 0);
     }
 private:

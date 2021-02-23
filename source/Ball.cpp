@@ -23,6 +23,12 @@ void Ball::update(World& world) {
 }
 
 void Ball::collide(World& world) {
+    if (collideWall(world)) return;
+    if (collidePaddle(world, world.playerPaddle)) return;
+    if (collidePaddle(world, world.aiPaddle)) return;
+}
+
+bool Ball::collideWall(World& world) {
     const auto ballLeft = position.x;
     const auto ballRight = ballLeft + WIDTH;
     const auto ballTop = position.y;
@@ -32,28 +38,27 @@ void Ball::collide(World& world) {
     if (ballRight < 0.0f) {
         world.scores[0].increment();
         reset(-1);
-        return;
+        return true;
     } else if (ballLeft > Window::WIDTH) {
         world.scores[1].increment();
         reset(1);
-        return;
+        return true;
     } else if (ballTop < 0.0f) { 
         velocity.y *= -1;
         position.y = 0.0;
         world.audio.playWallHit();
-        return;
+        return true;
     } else if (ballBottom > Window::HEIGHT) {
         velocity.y *= -1;
         position.y = Window::HEIGHT - HEIGHT;
         world.audio.playWallHit();
-        return;
+        return true;
     }
 
-    if (collidePaddle(world, world.playerPaddle)) return;
-    if (collidePaddle(world, world.aiPaddle)) return;
+    return false;
 }
 
-bool Ball::collidePaddle(World& world, Paddle& paddle) {
+bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     const auto ballLeft = position.x;
     const auto ballRight = ballLeft + WIDTH;
     const auto ballTop = position.y;
