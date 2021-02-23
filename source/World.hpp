@@ -12,7 +12,7 @@ using namespace std;
 
 class Window;
 
-// Manager class for all stateful objects
+// Manages all the objects
 struct World {
     Audio audio;
     Ball ball;

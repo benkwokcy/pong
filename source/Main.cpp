@@ -31,9 +31,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argcs[]) {
         input.update();
         if (!input.pause) {
             world.update(input);
-        } else {
-
-        }         
+        }       
         world.draw(window, input);
         wait(startTime);
     }

@@ -11,14 +11,13 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 - Score counters
 - Sound effects
 - Pause button
+- AI Opponent
 
 ## Features To Do
 
-- Clean up AI code
-
+- Clean up AI code -> controller class?
 - Add sprites
 - Add instructions at the bottom
-- Add pause menu
 - Add start menu
 - Separate the collision detection from the objects
 - Let collision account for side hits vs top hits vs corner hits

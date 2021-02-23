@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// This takes care of creating and destroying the SDL window, renderer, and font.
+// Initializes and closes SDL libraries.
 class Window {
 public:
     static constexpr int WIDTH = 640;

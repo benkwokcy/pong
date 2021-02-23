@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// A text string that appears on the screen.
 class Text {
 public:
     Text(Vec2 position, SDL_Renderer* renderer, TTF_Font* font, string content) : position(position), valueString(content), font(font), renderer(renderer) { 

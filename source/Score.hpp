@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// A text element that displays an incrementable integer.
 class Score : public Text {
 public:
     Score(Vec2 position, SDL_Renderer* renderer, TTF_Font* font, string content) : 
