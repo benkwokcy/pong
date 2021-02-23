@@ -19,9 +19,8 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 - Add pause menu
 - Add start menu
 - Add AI
-- Use entity component system
-- Add event queue and make the other functions pure
-- Get better sound effects
+- Separate the collision detection from the objects
+- Let collision account for side hits vs top hits vs corner hits
 
 ## Dependencies
 

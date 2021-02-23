@@ -1,11 +1,12 @@
 #pragma once
 
+#include <vector>
+
 #include "Audio.hpp"
 #include "Ball.hpp"
 #include "Paddle.hpp"
 #include "Score.hpp"
 #include "Window.hpp"
-#include <vector>
 
 using namespace std;
 
