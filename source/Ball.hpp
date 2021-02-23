@@ -7,23 +7,26 @@
 
 struct World;
 
-struct Ball {
+class Ball {
+public:
     constexpr static float HORIZONTAL_SPEED = 5.0f;
     constexpr static float VERTICAL_SPEED = 0.75 * HORIZONTAL_SPEED;
     constexpr static int WIDTH = 15;
     constexpr static int HEIGHT = 15;
 
+    Ball(Vec2 position, Vec2 velocity);
+    
+    void update(World& world);
+    void draw(SDL_Renderer* renderer) const;
+private:
     Vec2 position;
     Vec2 velocity;
+    SDL_Rect rect {};  
     const Vec2 initialPosition;
     const Vec2 initialVelocity;
-    SDL_Rect rect {};  
 
-    Ball(Vec2 position, Vec2 velocity);
-    void reset(int sign);
-    void update(World& world);
     void collide(World& world);
-    void draw(SDL_Renderer* renderer) const;
+    void reset(int sign);
 };
 
 #endif

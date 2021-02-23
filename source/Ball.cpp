@@ -9,13 +9,6 @@ Ball::Ball(Vec2 position, Vec2 velocity) : position(position), velocity(velocity
     rect.h = HEIGHT;
 }
 
-void Ball::reset(int sign) {
-    position = initialPosition;
-    velocity = initialVelocity;
-    velocity.x *= static_cast<float>(sign);
-    SDL_Delay(100);
-}
-
 void Ball::draw(SDL_Renderer* renderer) const {
     SDL_RenderFillRect(renderer, &rect);
 }
@@ -87,4 +80,11 @@ void Ball::collide(World& world) {
         
         return;
     }
+}
+
+void Ball::reset(int sign) {
+    position = initialPosition;
+    velocity = initialVelocity;
+    velocity.x *= static_cast<float>(sign);
+    SDL_Delay(100);
 }

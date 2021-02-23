@@ -31,9 +31,11 @@ void World::draw(const Window& window) const {
     SDL_SetRenderDrawColor(window.renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     for (int y = 0; y < Window::HEIGHT; y++) { if (y % 5) SDL_RenderDrawPoint(window.renderer, Window::WIDTH / 2, y); }
     
+    // Draw the objects
     ball.draw(window.renderer);
     for (auto& p : paddles) { p.draw(window.renderer); }
     for (auto& s : scores) { s.draw(); }
 
+    // Swap buffers
     SDL_RenderPresent(window.renderer);
 }

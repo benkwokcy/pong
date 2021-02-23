@@ -10,16 +10,8 @@
 
 using namespace std;
 
-struct Score {
-    Vec2 position;
-    int valueInt;
-    std::string valueString;
-    SDL_Rect rect {};    
-    TTF_Font* font {};
-    SDL_Renderer* renderer {};
-    SDL_Surface* surface {};
-    SDL_Texture* texture {};
-
+class Score {
+public:
     Score(Vec2 position, SDL_Renderer* renderer, TTF_Font* font) : position(position), valueInt(0), font(font), renderer(renderer) { 
         regenerate();
         int width, height; SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
@@ -71,10 +63,8 @@ struct Score {
         return *this;
     }
 
-    void regenerate() {
-        valueString = to_string(valueInt);
-        surface = TTF_RenderText_Solid(font, valueString.data(), {0xFF, 0xFF, 0xFF, 0xFF});
-        texture = SDL_CreateTextureFromSurface(renderer, surface);
+    void draw() const {
+        SDL_RenderCopy(renderer, texture, nullptr, &rect);
     }
 
     void increment() {
@@ -82,8 +72,21 @@ struct Score {
         regenerate();
     }
 
-    void draw() const {
-        SDL_RenderCopy(renderer, texture, nullptr, &rect);
+private:
+    Vec2 position;
+    int valueInt;
+    std::string valueString;
+    SDL_Rect rect {};    
+    TTF_Font* font {};
+    SDL_Renderer* renderer {};
+    SDL_Surface* surface {};
+    SDL_Texture* texture {};
+
+    void regenerate() {
+        valueString = to_string(valueInt);
+        surface = TTF_RenderText_Solid(font, valueString.data(), {0xFF, 0xFF, 0xFF, 0xFF});
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
     }
+
 
 };
