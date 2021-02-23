@@ -3,10 +3,8 @@
 
 #include <SDL2/SDL_mixer.h>
 
-struct Audio {
-    Mix_Chunk* wallHit;
-    Mix_Chunk* paddleHit;
-
+class Audio {
+public:
     Audio() {
         wallHit = Mix_LoadWAV("source/assets/wallHit.wav");
         paddleHit = Mix_LoadWAV("source/assets/paddleHit.wav");
@@ -19,6 +17,9 @@ struct Audio {
     void playPaddleHit() {
         Mix_PlayChannel(-1, paddleHit, 0);
     }
+private:
+    Mix_Chunk* wallHit;
+    Mix_Chunk* paddleHit;
 };
 
 #endif

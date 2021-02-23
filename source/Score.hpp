@@ -83,6 +83,9 @@ private:
     SDL_Texture* texture {};
 
     void regenerate() {
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(texture);
+        
         valueString = to_string(valueInt);
         surface = TTF_RenderText_Solid(font, valueString.data(), {0xFF, 0xFF, 0xFF, 0xFF});
         texture = SDL_CreateTextureFromSurface(renderer, surface);

@@ -9,7 +9,8 @@
 using namespace std;
 
 // This takes care of creating and destroying the SDL window, renderer, and font.
-struct Window {
+class Window {
+public:
     static constexpr int WIDTH = 640;
     static constexpr int HEIGHT = 480;
     static constexpr char GAME_NAME[] = "PONNNNNNNNG!";
@@ -35,7 +36,7 @@ struct Window {
         TTF_Quit();
         SDL_Quit();
     }
-
+private:
     // Crash if code is equal to error code
     template <typename A, typename B>
     void verify(const A actualCode, const B errorCode) {

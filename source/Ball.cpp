@@ -49,9 +49,10 @@ void Ball::collide(World& world) {
 
     // PADDLE COLLISION
     for (auto& paddle : world.paddles) {
-        const auto paddleLeft = paddle.position.x;
+        auto& paddlePosition = paddle.getPosition();
+        const auto paddleLeft = paddlePosition.x;
         const auto paddleRight = paddleLeft + Paddle::WIDTH;
-        const auto paddleTop = paddle.position.y;
+        const auto paddleTop = paddlePosition.y;
         const auto paddleBottom = paddleTop + Paddle::HEIGHT;
 
         if (ballLeft >= paddleRight) continue;

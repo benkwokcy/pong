@@ -11,6 +11,10 @@ Paddle::Paddle(Vec2 position, Vec2 velocity) : position(position), velocity(velo
     rect.h = HEIGHT;
 }
 
+const Vec2& Paddle::getPosition() const {
+    return position;
+}
+
 void Paddle::update(const PaddleState& paddleState) {
     if (paddleState.up) {
         velocity.y = -SPEED;
