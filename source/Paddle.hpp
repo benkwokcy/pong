@@ -3,10 +3,10 @@
 
 #include <SDL2/SDL.h>
 
-#include "Input.hpp"
 #include "Utilities.hpp"
 
 struct World;
+struct Input;
 
 class Paddle {
 public:

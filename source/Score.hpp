@@ -5,7 +5,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "Utilities.hpp"
 #include "Text.hpp"
 
 using namespace std;

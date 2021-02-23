@@ -1,10 +1,11 @@
+#include <vector>
+
 #include "Window.hpp"
 #include "World.hpp"
 #include "Ball.hpp"
 #include "Score.hpp"
 #include "Paddle.hpp"
 #include "Input.hpp"
-#include <vector>
 
 using namespace std;
 

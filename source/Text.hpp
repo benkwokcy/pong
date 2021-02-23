@@ -11,7 +11,7 @@ using namespace std;
 
 class Text {
 public:
-    Text(Vec2 position, SDL_Renderer* renderer, TTF_Font* font, string content) : position(position), font(font), valueString(content), renderer(renderer) { 
+    Text(Vec2 position, SDL_Renderer* renderer, TTF_Font* font, string content) : position(position), valueString(content), font(font), renderer(renderer) { 
         regenerate();
         int width, height; SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
         rect.x = static_cast<int>(position.x);
@@ -45,9 +45,9 @@ public:
 
     Text& operator=(Text&& other) {
         position = std::move(other.position);
+        valueString = std::move(other.valueString);
         rect = std::move(other.rect);
         font = other.font; 
-        valueString = std::move(other.valueString);
         renderer = other.renderer; 
         surface = other.surface; 
         texture = other.texture; 

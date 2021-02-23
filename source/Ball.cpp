@@ -1,6 +1,7 @@
 #include "Ball.hpp"
 #include "Utilities.hpp"
 #include "World.hpp"
+#include "Window.hpp"
 
 Ball::Ball(Vec2 position, Vec2 velocity) : position(position), velocity(velocity), initialPosition(position), initialVelocity(velocity) {
     rect.x = static_cast<int>(position.x);

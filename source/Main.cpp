@@ -6,6 +6,7 @@
 
 #include "Window.hpp"
 #include "World.hpp"
+#include "Input.hpp"
 
 using namespace std;
 

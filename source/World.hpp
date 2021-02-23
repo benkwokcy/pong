@@ -6,9 +6,10 @@
 #include "Ball.hpp"
 #include "Paddle.hpp"
 #include "Score.hpp"
-#include "Window.hpp"
 
 using namespace std;
+
+class Window;
 
 // Manager class for all stateful objects
 struct World {

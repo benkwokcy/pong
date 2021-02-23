@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <random>
 
 // Allows convenient arithmetic operations on a pair of floats.
 struct Vec2 {
