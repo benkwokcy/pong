@@ -1,5 +1,4 @@
-#ifndef AUDIO_H
-#define AUDIO_H
+#pragma once
 
 #include <SDL2/SDL_mixer.h>
 
@@ -21,5 +20,3 @@ private:
     Mix_Chunk* wallHit;
     Mix_Chunk* paddleHit;
 };
-
-#endif

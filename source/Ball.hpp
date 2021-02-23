@@ -1,5 +1,4 @@
-#ifndef BALL_H
-#define BALL_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -34,5 +33,3 @@ private:
     bool collidePaddle(const World& world, const Paddle& paddle);
     void reset(int sign);
 };
-
-#endif

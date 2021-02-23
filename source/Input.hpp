@@ -1,5 +1,4 @@
-#ifndef INPUT_H
-#define INPUT_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -31,5 +30,3 @@ struct Input {
         }
     }
 };
-
-#endif

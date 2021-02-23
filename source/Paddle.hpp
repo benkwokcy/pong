@@ -1,5 +1,4 @@
-#ifndef PADDLE_H
-#define PADDLE_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -26,5 +25,3 @@ private:
     Vec2 velocity;
     SDL_Rect rect {};    
 };
-
-#endif
