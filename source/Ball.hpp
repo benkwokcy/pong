@@ -6,16 +6,19 @@
 #include "Utilities.hpp"
 
 struct World;
+class Paddle;
 
 class Ball {
 public:
-    constexpr static float HORIZONTAL_SPEED = 5.0f;
-    constexpr static float VERTICAL_SPEED = 0.75 * HORIZONTAL_SPEED;
+    constexpr static float HORIZONTAL_SPEED = 6.0f;
+    constexpr static float VERTICAL_SPEED = 1.0f * HORIZONTAL_SPEED;
     constexpr static int WIDTH = 15;
     constexpr static int HEIGHT = 15;
 
     Ball(Vec2 position, Vec2 velocity);
-    
+
+    const Vec2& getPosition() const;
+
     void update(World& world);
     void draw(SDL_Renderer* renderer) const;
 private:
@@ -26,6 +29,7 @@ private:
     const Vec2 initialVelocity;
 
     void collide(World& world);
+    bool collidePaddle(World& world, Paddle& paddle);
     void reset(int sign);
 };
 

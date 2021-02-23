@@ -9,6 +9,8 @@ Ball::Ball(Vec2 position, Vec2 velocity) : position(position), velocity(velocity
     rect.h = HEIGHT;
 }
 
+const Vec2& Ball::getPosition() const { return position; }
+
 void Ball::draw(SDL_Renderer* renderer) const {
     SDL_RenderFillRect(renderer, &rect);
 }
@@ -47,40 +49,47 @@ void Ball::collide(World& world) {
         return;
     }
 
-    // PADDLE COLLISION
-    for (auto& paddle : world.paddles) {
-        auto& paddlePosition = paddle.getPosition();
-        const auto paddleLeft = paddlePosition.x;
-        const auto paddleRight = paddleLeft + Paddle::WIDTH;
-        const auto paddleTop = paddlePosition.y;
-        const auto paddleBottom = paddleTop + Paddle::HEIGHT;
+    if (collidePaddle(world, world.playerPaddle)) return;
+    if (collidePaddle(world, world.aiPaddle)) return;
+}
 
-        if (ballLeft >= paddleRight) continue;
-        if (ballRight <= paddleLeft) continue;
-        if (ballTop >= paddleBottom) continue;
-        if (ballBottom <= paddleTop) continue;
+bool Ball::collidePaddle(World& world, Paddle& paddle) {
+    const auto ballLeft = position.x;
+    const auto ballRight = ballLeft + WIDTH;
+    const auto ballTop = position.y;
+    const auto ballBottom = ballTop + HEIGHT;
 
-        const auto paddleLower = paddleTop + (2.0f / 3.0f * Paddle::HEIGHT);
-        const auto paddleUpper = paddleTop + (1.0f / 3.0f * Paddle::HEIGHT);
+    auto& paddlePosition = paddle.getPosition();
+    const auto paddleLeft = paddlePosition.x;
+    const auto paddleRight = paddleLeft + Paddle::WIDTH;
+    const auto paddleTop = paddlePosition.y;
+    const auto paddleBottom = paddleTop + Paddle::HEIGHT;
 
-        if (ballTop < paddleUpper) {
-            velocity.y = Ball::VERTICAL_SPEED; 
-        } else if (ballBottom < paddleLower) {
-            velocity.y = -Ball::VERTICAL_SPEED;
-        }
+    if (ballLeft >= paddleRight) return false;
+    if (ballRight <= paddleLeft) return false;
+    if (ballTop >= paddleBottom) return false;
+    if (ballBottom <= paddleTop) return false;
 
-        if (velocity.x > 0.0f) {
-            position.x -= ballRight - paddleLeft; 
-        } else {
-            position.x += paddleRight - ballLeft;
-        }
+    const auto paddleLower = paddleTop + (2.0f / 3.0f * Paddle::HEIGHT);
+    const auto paddleUpper = paddleTop + (1.0f / 3.0f * Paddle::HEIGHT);
 
-        velocity.x *= -1;
-
-        world.audio.playPaddleHit();
-        
-        return;
+    if (ballTop < paddleUpper) {
+        velocity.y = Ball::VERTICAL_SPEED; 
+    } else if (ballBottom < paddleLower) {
+        velocity.y = -Ball::VERTICAL_SPEED;
     }
+
+    if (velocity.x > 0.0f) {
+        position.x -= ballRight - paddleLeft; 
+    } else {
+        position.x += paddleRight - ballLeft;
+    }
+
+    velocity.x *= -1;
+
+    world.audio.playPaddleHit();
+
+    return true;
 }
 
 void Ball::reset(int sign) {

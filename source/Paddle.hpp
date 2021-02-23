@@ -6,9 +6,11 @@
 #include "Input.hpp"
 #include "Utilities.hpp"
 
+struct World;
+
 class Paddle {
 public:
-    constexpr static float SPEED = 6.0f;
+    constexpr static float SPEED = 6.5f;
     constexpr static int WIDTH = 15;
     constexpr static int HEIGHT = 75;
 
@@ -16,7 +18,8 @@ public:
 
     const Vec2& getPosition() const; 
 
-    void update(const PaddleState& paddleState);
+    void updateAI(const World& world);
+    void updatePlayer(const Input& input);
     void draw(SDL_Renderer* renderer) const;
 private:
     Vec2 position;

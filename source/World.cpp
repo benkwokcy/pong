@@ -9,17 +9,18 @@
 using namespace std;
 
 World::World(const Window& window) : 
-    ball(Vec2(Window::WIDTH / 2.0f - Ball::WIDTH / 2.0f, Window::HEIGHT / 2.0f - Ball::HEIGHT / 2.0f), Vec2(Ball::HORIZONTAL_SPEED, 0.0f)) 
+    ball(Vec2(Window::WIDTH / 2.0f - Ball::WIDTH / 2.0f, Window::HEIGHT / 2.0f - Ball::HEIGHT / 2.0f), Vec2(Ball::HORIZONTAL_SPEED, 0.0f)),
+    playerPaddle(Vec2(50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f)),
+    aiPaddle(Vec2(Window::WIDTH - 50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f))
     {
-        paddles.emplace_back(Vec2(50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f));
-        paddles.emplace_back(Vec2(Window::WIDTH - 50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f));
         scores.emplace_back(Vec2(Window::WIDTH * 0.75f, 20.0f), window.renderer, window.scoreFont);
         scores.emplace_back(Vec2(Window::WIDTH * 0.25f, 20.0f), window.renderer, window.scoreFont);
     }
 
 void World::update(const Input& input) {
     ball.update(*this);
-    for (size_t i = 0; i < paddles.size(); i++) { paddles[i].update(input.paddleStates[i]); }
+    playerPaddle.updatePlayer(input);
+    aiPaddle.updateAI(*this);
 }
 
 void World::draw(const Window& window) const {
@@ -33,7 +34,8 @@ void World::draw(const Window& window) const {
     
     // Draw the objects
     ball.draw(window.renderer);
-    for (auto& p : paddles) { p.draw(window.renderer); }
+    playerPaddle.draw(window.renderer);
+    aiPaddle.draw(window.renderer);
     for (auto& s : scores) { s.draw(); }
 
     // Swap buffers

@@ -14,7 +14,8 @@ using namespace std;
 struct World {
     Audio audio;
     Ball ball;
-    vector<Paddle> paddles;
+    Paddle playerPaddle;
+    Paddle aiPaddle;
     vector<Score> scores;
 
     World(const Window& window);
