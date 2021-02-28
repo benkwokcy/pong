@@ -9,8 +9,7 @@ class Paddle;
 
 class Ball {
 public:
-    constexpr static float HORIZONTAL_SPEED = 6.0f;
-    constexpr static float VERTICAL_SPEED = 1.0f * HORIZONTAL_SPEED;
+    constexpr static float SPEED = 6.0f;
     constexpr static int WIDTH = 15;
     constexpr static int HEIGHT = 15;
 

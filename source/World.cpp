@@ -10,7 +10,7 @@
 using namespace std;
 
 World::World(const Window& window) : 
-    ball(Vec2(Window::WIDTH / 2.0f - Ball::WIDTH / 2.0f, Window::HEIGHT / 2.0f - Ball::HEIGHT / 2.0f), Vec2(Ball::HORIZONTAL_SPEED, 0.0f)),
+    ball(Vec2(Window::WIDTH / 2.0f - Ball::WIDTH / 2.0f, Window::HEIGHT / 2.0f - Ball::HEIGHT / 2.0f), Vec2(Ball::SPEED, 0.0f)),
     playerPaddle(Vec2(50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f)),
     aiPaddle(Vec2(Window::WIDTH - 50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f)),
     pauseText(Vec2(Window::WIDTH / 2.0f, Window::HEIGHT / 2.0f), window.renderer, window.scoreFont, "PAUSED")

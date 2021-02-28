@@ -16,6 +16,7 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 ## Features To Do
 
 - Clean up AI code -> controller class?
+- Parent class for game objects -> position, velocity, getters and setters, reset
 - Add sprites
 - Add instructions at the bottom
 - Add start menu

@@ -35,7 +35,6 @@ bool Ball::collideWall(World& world) {
     const auto ballTop = position.y;
     const auto ballBottom = ballTop + HEIGHT;
 
-    // WALL COLLISION
     if (ballRight < 0.0f) {
         world.scores[0].increment();
         reset(-1);
@@ -80,9 +79,9 @@ bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     const auto paddleUpper = paddleTop + (1.0f / 3.0f * Paddle::HEIGHT);
 
     if (ballTop < paddleUpper) {
-        velocity.y = Ball::VERTICAL_SPEED; 
+        velocity.y = Ball::SPEED; 
     } else if (ballBottom < paddleLower) {
-        velocity.y = -Ball::VERTICAL_SPEED;
+        velocity.y = -Ball::SPEED;
     }
 
     if (velocity.x > 0.0f) {
