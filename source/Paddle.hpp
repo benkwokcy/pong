@@ -17,11 +17,13 @@ public:
 
     const Vec2& getPosition() const; 
 
-    void updateAI(const World& world);
-    void updatePlayer(const Input& input);
+    void update(const World& world, const Input& input, bool isAI);
     void draw(SDL_Renderer* renderer) const;
 private:
     Vec2 position;
     Vec2 velocity;
     SDL_Rect rect {};    
+
+    void updateAI(const World& world, const Input& input);
+    void updatePlayer(const World& world, const Input& input);
 };

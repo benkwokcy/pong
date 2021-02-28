@@ -17,7 +17,19 @@ const Vec2& Paddle::getPosition() const {
     return position;
 }
 
-void Paddle::updateAI(const World& world) {
+void Paddle::update(const World& world, const Input& input, bool isAI) {
+    if (isAI) {
+        updateAI(world, input);
+    } else {
+        updatePlayer(world, input);
+    }
+
+    position.y += velocity.y;
+    position.y = std::clamp(position.y, 0.0f, static_cast<float>(Window::HEIGHT - HEIGHT));
+    rect.y = static_cast<int>(position.y);
+}
+
+void Paddle::updateAI(const World& world, const Input& input) {
     float paddleCenter = position.y + (HEIGHT / 2.0);
     float ballCenter = world.ball.getPosition().y;
 
@@ -30,13 +42,9 @@ void Paddle::updateAI(const World& world) {
     } else {
         velocity.y = 0.0f;
     }
-
-    position.y += velocity.y;
-    position.y = std::clamp(position.y, 0.0f, static_cast<float>(Window::HEIGHT - HEIGHT));
-    rect.y = static_cast<int>(position.y);
 }
 
-void Paddle::updatePlayer(const Input& input) {
+void Paddle::updatePlayer(const World& world, const Input& input) {
     if (input.paddleUp) {
         velocity.y = -SPEED;
     } else if (input.paddleDown) {
@@ -44,10 +52,6 @@ void Paddle::updatePlayer(const Input& input) {
     } else {
         velocity.y = 0.0f;
     }
-
-    position.y += velocity.y;
-    position.y = std::clamp(position.y, 0.0f, static_cast<float>(Window::HEIGHT - HEIGHT));
-    rect.y = static_cast<int>(position.y);
 }
 
 void Paddle::draw(SDL_Renderer* renderer) const {

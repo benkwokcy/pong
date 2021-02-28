@@ -21,8 +21,8 @@ World::World(const Window& window) :
 
 void World::update(const Input& input) {
     ball.update(*this);
-    playerPaddle.updatePlayer(input);
-    aiPaddle.updateAI(*this);
+    playerPaddle.update(*this, input, false);
+    aiPaddle.update(*this, input, true);
 }
 
 void World::draw(const Window& window, const Input& input) const {
