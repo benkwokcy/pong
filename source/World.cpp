@@ -11,8 +11,8 @@ using namespace std;
 
 World::World(const Window& window) : 
     ball(Vec2(Window::WIDTH / 2.0f - Ball::WIDTH / 2.0f, Window::HEIGHT / 2.0f - Ball::HEIGHT / 2.0f), Vec2(Ball::SPEED, 0.0f)),
-    playerPaddle(Vec2(50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f)),
-    aiPaddle(Vec2(Window::WIDTH - 50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f)),
+    playerPaddle(Vec2(50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f), false),
+    aiPaddle(Vec2(Window::WIDTH - 50.0f, Window::HEIGHT / 2.0f - Paddle::HEIGHT / 2.0f), Vec2(0.0f, 0.0f), true),
     pauseText(Vec2(Window::WIDTH / 2.0f, Window::HEIGHT / 2.0f), window.renderer, window.scoreFont, "PAUSED")
     {
         scores.emplace_back(Vec2(Window::WIDTH * 0.75f, 20.0f), window.renderer, window.scoreFont, "0");
@@ -21,8 +21,8 @@ World::World(const Window& window) :
 
 void World::update(const Input& input) {
     ball.update(*this);
-    playerPaddle.update(*this, input, false);
-    aiPaddle.update(*this, input, true);
+    playerPaddle.update(*this, input);
+    aiPaddle.update(*this, input);
 }
 
 void World::draw(const Window& window, const Input& input) const {

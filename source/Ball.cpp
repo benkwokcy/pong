@@ -3,6 +3,8 @@
 #include "World.hpp"
 #include "Window.hpp"
 
+/*** CONSTRUCTORS ***/
+
 Ball::Ball(Vec2 position, Vec2 velocity) : position(position), velocity(velocity), initialPosition(position), initialVelocity(velocity) {
     rect.x = static_cast<int>(position.x);
     rect.y = static_cast<int>(position.y);
@@ -10,7 +12,11 @@ Ball::Ball(Vec2 position, Vec2 velocity) : position(position), velocity(velocity
     rect.h = HEIGHT;
 }
 
+/*** GETTERS ***/
+
 const Vec2& Ball::getPosition() const { return position; }
+
+/*** PUBLIC METHODS ***/
 
 void Ball::draw(SDL_Renderer* renderer) const {
     SDL_RenderFillRect(renderer, &rect);
@@ -22,6 +28,8 @@ void Ball::update(World& world) {
     rect.x = static_cast<int>(position.x);
     rect.y = static_cast<int>(position.y);
 }
+
+/*** PRIVATE METHODS ***/
 
 void Ball::collide(World& world) {
     if (collideWall(world)) return;

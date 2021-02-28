@@ -13,17 +13,18 @@ public:
     constexpr static int WIDTH = 15;
     constexpr static int HEIGHT = 75;
 
-    Paddle(Vec2 position, Vec2 velocity);
+    Paddle(Vec2 position, Vec2 velocity, bool isAIControlled);
 
     const Vec2& getPosition() const; 
 
-    void update(const World& world, const Input& input, bool isAI);
+    void update(const World& world, const Input& input);
     void draw(SDL_Renderer* renderer) const;
 private:
     Vec2 position;
     Vec2 velocity;
-    SDL_Rect rect {};    
+    SDL_Rect rect {};
+    void (Paddle::* controller)(const World& world, const Input& input);
 
-    void updateAI(const World& world, const Input& input);
-    void updatePlayer(const World& world, const Input& input);
+    void aiController(const World& world, const Input& input);
+    void playerController(const World& world, const Input& input);
 };
