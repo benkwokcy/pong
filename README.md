@@ -18,7 +18,7 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 - Add instructions at the bottom
 - Add start menu
 - Separate the collision detection from the objects
-- Let collision account for side hits vs top hits vs corner hits
+- Let collision account for hits at the top of the paddle
 
 ## Dependencies
 
