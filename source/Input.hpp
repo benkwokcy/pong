@@ -16,15 +16,15 @@ struct Input {
                 quit = true; 
             } else if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:   quit = true; break;
-                    case SDLK_w:        paddleUp = true; break;
-                    case SDLK_s:        paddleDown = true; break;
-                    case SDLK_p:        pause = !pause; break;
+                    case SDLK_ESCAPE: quit = true; break;
+                    case SDLK_w: paddleUp = true; break;
+                    case SDLK_s: paddleDown = true; break;
+                    case SDLK_p: pause = !pause; break;
                 }
             } else if (event.type == SDL_KEYUP) {
                 switch (event.key.keysym.sym) {
-                    case SDLK_w:        paddleUp = false; break;
-                    case SDLK_s:        paddleDown = false; break;
+                    case SDLK_w: paddleUp = false; break;
+                    case SDLK_s: paddleDown = false; break;
                 }
             }
         }

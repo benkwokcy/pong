@@ -78,11 +78,13 @@ bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     const auto paddleTop = paddlePosition.y;
     const auto paddleBottom = paddleTop + Paddle::HEIGHT;
 
+    // no collision
     if (ballLeft >= paddleRight) return false;
     if (ballRight <= paddleLeft) return false;
     if (ballTop >= paddleBottom) return false;
     if (ballBottom <= paddleTop) return false;
 
+    // there was a collision, identify which type and handle appropriately
     const auto paddleLower = paddleTop + (2.0f / 3.0f * Paddle::HEIGHT);
     const auto paddleUpper = paddleTop + (1.0f / 3.0f * Paddle::HEIGHT);
 
@@ -99,9 +101,7 @@ bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     }
 
     velocity.x *= -1;
-
     world.audio.playPaddleHit();
-
     return true;
 }
 

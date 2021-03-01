@@ -14,8 +14,6 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 - AI Opponent
 
 ## Features To Do
-
-- Clean up AI code -> controller class?
 - Add sprites
 - Add instructions at the bottom
 - Add start menu

@@ -22,7 +22,6 @@ struct World {
     Text pauseText;
 
     World(const Window& window);
-    
     void update(const Input& input);
     void draw(const Window& window, const Input& input) const;
 };
