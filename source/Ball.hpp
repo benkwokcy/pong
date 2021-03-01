@@ -14,16 +14,13 @@ public:
     constexpr static int HEIGHT = 15;
 
     Ball(Vec2 position, Vec2 velocity);
-
     const Vec2& getPosition() const;
-
     void update(World& world);
     void draw(SDL_Renderer* renderer) const;
 private:
     Vec2 position;
     Vec2 velocity;
     SDL_Rect rect {};  
-    
     const Vec2 initialPosition;
     const Vec2 initialVelocity;
 

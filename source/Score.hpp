@@ -27,8 +27,7 @@ public:
     }
 
     void increment() {
-        valueInt++;
-        valueString = to_string(valueInt);
+        valueString = to_string(++valueInt);
         regenerate();
     }
 

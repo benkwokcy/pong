@@ -14,16 +14,16 @@ public:
     constexpr static int HEIGHT = 75;
 
     Paddle(Vec2 position, Vec2 velocity, bool isAIControlled);
-
     const Vec2& getPosition() const; 
-
     void update(const World& world, const Input& input);
     void draw(SDL_Renderer* renderer) const;
 private:
+    using controllerFunctionPointer = void (Paddle::*)(const World& world, const Input& input);
+
     Vec2 position;
     Vec2 velocity;
     SDL_Rect rect {};
-    void (Paddle::* controller)(const World& world, const Input& input);
+    controllerFunctionPointer controller;
 
     void aiController(const World& world, const Input& input);
     void playerController(const World& world, const Input& input);
