@@ -70,23 +70,34 @@ bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     if (collisionType == NONE) return false;
 
     cout << "Hit detected: " << collisionType << " " << penetration << endl;
+    auto paddleVelocity = paddle.getVelocity().y;
 
     switch (collisionType) {
         case TOP:
-            velocity.y *= -1.0f;
+            velocity.y = SPEED;
             position.y += penetration;
             break;
         case BOTTOM:
-            velocity.y *= -1.0f; 
+            velocity.y = -SPEED; 
             position.y -= penetration;
             break;
         case LEFT:
             velocity.x = SPEED;
             position.x += penetration;
+            if (paddleVelocity > 0.0f) {
+                velocity.y = SPEED;
+            } else if (paddleVelocity < 0.0f) {
+                velocity.y = -SPEED;
+            }
             break;
         case RIGHT:
             velocity.x = -SPEED;
             position.x -= penetration;
+            if (paddleVelocity > 0.0f) {
+                velocity.y = SPEED;
+            } else if (paddleVelocity < 0.0f) {
+                velocity.y = -SPEED;
+            }
             break;
         default:
             throw runtime_error("Unhandled collision type.");

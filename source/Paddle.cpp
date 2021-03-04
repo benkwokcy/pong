@@ -21,6 +21,10 @@ const Vec2& Paddle::getPosition() const {
     return position;
 }
 
+const Vec2& Paddle::getVelocity() const {
+    return velocity;
+}
+
 /*** PUBLIC METHODS ***/
 
 void Paddle::update(const World& world, const Input& input) {

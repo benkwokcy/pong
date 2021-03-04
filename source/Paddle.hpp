@@ -15,6 +15,7 @@ public:
 
     Paddle(Vec2 position, Vec2 velocity, bool isAIControlled);
     const Vec2& getPosition() const; 
+    const Vec2& getVelocity() const; 
     void update(const World& world, const Input& input);
     void draw(SDL_Renderer* renderer) const;
 private:
