@@ -67,40 +67,33 @@ bool Ball::collideWall(World& world) {
 
 bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     auto [collisionType, penetration] = checkObjectCollision(paddle, *this);
+
     if (collisionType == NONE) return false;
 
-    cout << "Hit detected: " << collisionType << " " << penetration << endl;
-    auto paddleVelocity = paddle.getVelocity().y;
-
-    switch (collisionType) {
-        case TOP:
-            velocity.y = SPEED;
-            position.y += penetration;
-            break;
-        case BOTTOM:
-            velocity.y = -SPEED; 
-            position.y -= penetration;
-            break;
-        case LEFT:
+    if (collisionType == TOP) {
+        velocity.y = SPEED;
+        position.y += penetration;
+    } else if (collisionType == BOTTOM) {
+        velocity.y = -SPEED; 
+        position.y -= penetration;
+    } else if (collisionType == LEFT || collisionType == RIGHT) {
+        auto paddleVelocity = paddle.getVelocity().y;
+        
+        if (collisionType == LEFT) {
             velocity.x = SPEED;
             position.x += penetration;
-            if (paddleVelocity > 0.0f) {
-                velocity.y = SPEED;
-            } else if (paddleVelocity < 0.0f) {
-                velocity.y = -SPEED;
-            }
-            break;
-        case RIGHT:
+        } else {
             velocity.x = -SPEED;
             position.x -= penetration;
-            if (paddleVelocity > 0.0f) {
-                velocity.y = SPEED;
-            } else if (paddleVelocity < 0.0f) {
-                velocity.y = -SPEED;
-            }
-            break;
-        default:
-            throw runtime_error("Unhandled collision type.");
+        }
+
+        if (paddleVelocity > 0.0f) {
+            velocity.y = SPEED;
+        } else if (paddleVelocity < 0.0f) {
+            velocity.y = -SPEED;
+        }
+    } else {
+        throw runtime_error("Unexpected collision type.");
     }
 
     world.audio.playPaddleHit();

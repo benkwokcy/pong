@@ -55,12 +55,12 @@ pair<CollisionType, float> checkObjectCollision(const A& a, const B& b) {
     const auto bTop = bPosition.y;
     const auto bBottom = bPosition.y + B::HEIGHT;
 
-    float dx = (aLeft + A::WIDTH / 2.0f) - (bLeft + B::WIDTH / 2.0f);
-    float dy = (aTop + A::HEIGHT / 2.0f) - (bTop + B::HEIGHT / 2.0f);
-    float width = (A::WIDTH + B::WIDTH) / 2.0f;
-    float height = (A::HEIGHT + B::HEIGHT) / 2.0f;
-    float crossWidth = width * dy;
-    float crossHeight = height * dx;
+    const float dx = (aLeft + A::WIDTH / 2.0f) - (bLeft + B::WIDTH / 2.0f);
+    const float dy = (aTop + A::HEIGHT / 2.0f) - (bTop + B::HEIGHT / 2.0f);
+    const float width = (A::WIDTH + B::WIDTH) / 2.0f;
+    const float height = (A::HEIGHT + B::HEIGHT) / 2.0f;
+    const float crossWidth = width * dy;
+    const float crossHeight = height * dx;
 
     CollisionType collision = NONE;
     float penetration = 0.0f;
