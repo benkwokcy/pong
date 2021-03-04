@@ -24,7 +24,7 @@ private:
     const Vec2 initialPosition;
     const Vec2 initialVelocity;
 
-    void collide(World& world);
+    bool collide(World& world);
     bool collideWall(World& world);
     bool collidePaddle(const World& world, const Paddle& paddle);
     void reset(int sign);

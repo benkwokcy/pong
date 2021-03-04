@@ -14,11 +14,14 @@ Pong game using C++ and SDL. Based off the tutorial from https://austinmorlan.co
 - AI Opponent
 
 ## Features To Do
+- Separate the collision detection from the objects
+- Let collision account for hits at the top of the paddle
+
+- Make more things pure and const
+
 - Add sprites
 - Add instructions at the bottom
 - Add start menu
-- Separate the collision detection from the objects
-- Let collision account for hits at the top of the paddle
 
 ## Dependencies
 

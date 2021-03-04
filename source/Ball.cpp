@@ -1,7 +1,11 @@
+#include <stdexcept>
+#include <iostream>
+
 #include "Ball.hpp"
 #include "Utilities.hpp"
 #include "World.hpp"
 #include "Window.hpp"
+#include "Collision.hpp"
 
 /*** CONSTRUCTORS ***/
 
@@ -31,76 +35,63 @@ void Ball::update(World& world) {
 
 /*** PRIVATE METHODS ***/
 
-void Ball::collide(World& world) {
-    if (collideWall(world)) return;
-    if (collidePaddle(world, world.playerPaddle)) return;
-    if (collidePaddle(world, world.aiPaddle)) return;
+bool Ball::collide(World& world) {
+    return (collideWall(world)) || (collidePaddle(world, world.playerPaddle)) || (collidePaddle(world, world.aiPaddle));
 }
 
 bool Ball::collideWall(World& world) {
-    const auto ballLeft = position.x;
-    const auto ballRight = ballLeft + WIDTH;
-    const auto ballTop = position.y;
-    const auto ballBottom = ballTop + HEIGHT;
-
-    if (ballRight < 0.0f) {
-        world.scores[0].increment();
-        reset(-1);
-        return true;
-    } else if (ballLeft > Window::WIDTH) {
-        world.scores[1].increment();
-        reset(1);
-        return true;
-    } else if (ballTop < 0.0f) { 
-        velocity.y *= -1;
-        position.y = 0.0;
-        world.audio.playWallHit();
-        return true;
-    } else if (ballBottom > Window::HEIGHT) {
-        velocity.y *= -1;
-        position.y = Window::HEIGHT - HEIGHT;
-        world.audio.playWallHit();
-        return true;
+    auto collisionType = checkWallCollision(*this);
+    switch (collisionType) {
+        case LEFT:
+            world.scores[0].increment();
+            reset(-1);
+            return true;
+        case RIGHT:
+            world.scores[1].increment();
+            reset(1);
+            return true;
+        case TOP:
+            velocity.y *= -1;
+            position.y = 0.0;
+            world.audio.playWallHit();
+            return true;
+        case BOTTOM:
+            velocity.y *= -1;
+            position.y = Window::HEIGHT - HEIGHT;
+            world.audio.playWallHit();
+            return true;
+        case NONE:
+            return false;
     }
-
-    return false;
 }
 
 bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
-    const auto ballLeft = position.x;
-    const auto ballRight = ballLeft + WIDTH;
-    const auto ballTop = position.y;
-    const auto ballBottom = ballTop + HEIGHT;
+    auto [collisionType, penetration] = checkObjectCollision(paddle, *this);
+    if (collisionType == NONE) return false;
 
-    auto& paddlePosition = paddle.getPosition();
-    const auto paddleLeft = paddlePosition.x;
-    const auto paddleRight = paddleLeft + Paddle::WIDTH;
-    const auto paddleTop = paddlePosition.y;
-    const auto paddleBottom = paddleTop + Paddle::HEIGHT;
+    cout << "Hit detected: " << collisionType << endl;
 
-    // no collision
-    if (ballLeft >= paddleRight) return false;
-    if (ballRight <= paddleLeft) return false;
-    if (ballTop >= paddleBottom) return false;
-    if (ballBottom <= paddleTop) return false;
-
-    // there was a collision, identify which type and handle appropriately
-    const auto paddleLower = paddleTop + (2.0f / 3.0f * Paddle::HEIGHT);
-    const auto paddleUpper = paddleTop + (1.0f / 3.0f * Paddle::HEIGHT);
-
-    if (ballTop < paddleUpper) {
-        velocity.y = Ball::SPEED; 
-    } else if (ballBottom < paddleLower) {
-        velocity.y = -Ball::SPEED;
+    switch (collisionType) {
+        case TOP:
+            velocity.y *= -1.0f;
+            position.y += penetration;
+            break;
+        case BOTTOM:
+            velocity.y *= -1.0f; 
+            position.y -= penetration;
+            break;
+        case LEFT:
+            velocity.x = SPEED;
+            position.x += penetration;
+            break;
+        case RIGHT:
+            velocity.x = -SPEED;
+            position.x -= penetration;
+            break;
+        default:
+            throw runtime_error("Unhandled collision type.");
     }
 
-    if (velocity.x > 0.0f) {
-        position.x -= ballRight - paddleLeft; 
-    } else {
-        position.x += paddleRight - ballLeft;
-    }
-
-    velocity.x *= -1;
     world.audio.playPaddleHit();
     return true;
 }
