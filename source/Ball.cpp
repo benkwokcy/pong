@@ -69,7 +69,7 @@ bool Ball::collidePaddle(const World& world, const Paddle& paddle) {
     auto [collisionType, penetration] = checkObjectCollision(paddle, *this);
     if (collisionType == NONE) return false;
 
-    cout << "Hit detected: " << collisionType << endl;
+    cout << "Hit detected: " << collisionType << " " << penetration << endl;
 
     switch (collisionType) {
         case TOP:

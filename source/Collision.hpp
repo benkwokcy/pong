@@ -38,17 +38,22 @@ CollisionType checkWallCollision(const T& object) {
     }
 }
 
-// This is the collision from B's perspective. ex. if A hits the top of B, we say it is a BOTTOM collision.
+// This is the collision from B's perspective. ex. if A is on top B, we say it is a TOP collision.
 // Returns the collision type and the amount of penetration.
+// https://stackoverflow.com/questions/29861096/detect-which-side-of-a-rectangle-is-colliding-with-another-rectangle
 template <class A, class B>
 pair<CollisionType, float> checkObjectCollision(const A& a, const B& b) {
     const auto aPosition = a.getPosition();
     const auto aLeft = aPosition.x;
+    const auto aRight = aPosition.x + A::WIDTH;
     const auto aTop = aPosition.y;
+    const auto aBottom = aPosition.y + A::HEIGHT;
 
     const auto bPosition = b.getPosition();
     const auto bLeft = bPosition.x;
+    const auto bRight = bPosition.x + B::WIDTH;
     const auto bTop = bPosition.y;
+    const auto bBottom = bPosition.y + B::HEIGHT;
 
     float dx = (aLeft + A::WIDTH / 2.0f) - (bLeft + B::WIDTH / 2.0f);
     float dy = (aTop + A::HEIGHT / 2.0f) - (bTop + B::HEIGHT / 2.0f);
@@ -56,15 +61,29 @@ pair<CollisionType, float> checkObjectCollision(const A& a, const B& b) {
     float height = (A::HEIGHT + B::HEIGHT) / 2.0f;
     float crossWidth = width * dy;
     float crossHeight = height * dx;
+
     CollisionType collision = NONE;
+    float penetration = 0.0f;
 
     if (abs(dx) <= width && abs(dy) <= height) {
         if (crossWidth > crossHeight) {
-            collision = (crossWidth > (-crossHeight)) ? BOTTOM : LEFT;
+            if ((crossWidth > (-crossHeight))) {
+                collision = BOTTOM;
+                penetration = bBottom - aTop;
+            } else {
+                collision = LEFT;
+                penetration = aRight - bLeft;
+            }
         } else {
-            collision = (crossWidth > -(crossHeight)) ? RIGHT : TOP;
+            if (crossWidth > -(crossHeight)) {
+                collision = RIGHT;
+                penetration = bRight - aLeft;
+            } else {
+                collision = TOP;
+                penetration = aBottom - bTop;
+            }
         }
     }
 
-    return { collision, 0.0f };
+    return { collision, penetration };
 }
