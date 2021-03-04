@@ -1,24 +1,40 @@
 # pong
 
-Pong game using C++ and SDL. Based off the tutorial from <https://austinmorlan.com/posts/pong_clone/>.
+Pong game using C++ and SDL.
 
 ![Gameplay Demo](demo.png)
 
-## Features Done
+## Features
 
-- Basic functionality (rendering, input, collision-detection)
+- Basic functionality (rendering, input, ...)
 - Fixed timestep game loop
 - Score counters
 - Sound effects
 - Pause button
-- AI Opponent
+- AI opponent
+- Identify which side of an object collided another object
 
-## Features To Do
+## Design
 
-- Make more things pure and const
-- Add sprites
-- Add instructions at the bottom
-- Add start menu
+### Class Diagram
+
+![Class Diagram](class_diagram.png)  
+Note: the arrows roughly show who talks to who. The arrows don't indicate  inheritance.
+
+### Class Descriptions
+
+Main - the main game loop  
+Window - the window and renderer  
+World - the objects in the game  
+Input - keep track of which keyboard keys are pressed  
+
+Audio - plays sounds  
+Ball - ball  
+Paddle - paddle  
+Text / Score - text  
+
+Utilities - simple data structures  
+Collision - collision algorithms
 
 ## Dependencies
 
